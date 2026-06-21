@@ -34,8 +34,4 @@ public class RestauranteMapper {
         mesa.setStatus(StatusMesa.LIVRE);
         return mesa;
     }
-
-
-
-
 }
