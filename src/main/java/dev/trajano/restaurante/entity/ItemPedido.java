@@ -1,9 +1,6 @@
 package dev.trajano.restaurante.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +17,16 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long pedidoId;
-    private Long produtoId;
+    @ManyToOne(optional = false)
+    private Pedido pedido;
+    @ManyToOne(optional = false)
+    private Produto produto;
+    @Column(nullable = false)
     private Integer quantidade;
+    @Column(nullable = false,precision = 10,scale=2)
     private BigDecimal precoUnitario;
     private String observacao;
+    public BigDecimal getTotalPreco(){
+        return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
+    }
 }
