@@ -1,4 +1,4 @@
-package dev.trajano.restaurante.entity;
+package dev.trajano.restaurante.models.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

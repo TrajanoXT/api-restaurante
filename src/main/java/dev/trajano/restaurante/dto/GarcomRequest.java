@@ -10,5 +10,4 @@ public record GarcomRequest(
         @Cpf
         String cpf,
         Boolean ativo
-) {
-}
+){}

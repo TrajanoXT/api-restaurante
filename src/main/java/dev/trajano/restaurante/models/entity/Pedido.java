@@ -1,12 +1,11 @@
-package dev.trajano.restaurante.entity;
+package dev.trajano.restaurante.models.entity;
 
-import dev.trajano.restaurante.enums.StatusPedido;
+import dev.trajano.restaurante.models.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

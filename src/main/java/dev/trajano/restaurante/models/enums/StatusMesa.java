@@ -1,4 +1,4 @@
-package dev.trajano.restaurante.enums;
+package dev.trajano.restaurante.models.enums;
 
 public enum StatusMesa {
     LIVRE,
