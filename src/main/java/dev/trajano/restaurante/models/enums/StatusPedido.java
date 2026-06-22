@@ -5,5 +5,14 @@ public enum StatusPedido {
     EM_PREPARO,
     PRONTO,
     ENTREGUE,
-    CANCELADO
+    CANCELADO;
+
+    public boolean podeTracionarPara(StatusPedido novo){
+        return switch (this){
+            case ABERTO     -> novo == EM_PREPARO   || novo == CANCELADO;
+            case EM_PREPARO -> novo == PRONTO       || novo == CANCELADO;
+            case PRONTO     -> novo == ENTREGUE;
+            default         -> false;
+        };
+    }
 }

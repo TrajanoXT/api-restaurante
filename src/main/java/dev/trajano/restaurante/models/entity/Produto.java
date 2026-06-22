@@ -1,10 +1,7 @@
 package dev.trajano.restaurante.models.entity;
 
 import dev.trajano.restaurante.models.enums.CategoriaProduto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +21,7 @@ public class Produto {
     private String nome;
     private String descricao;
     private BigDecimal preco;
+    @Enumerated(EnumType.STRING)
     private CategoriaProduto categoria;
     private Boolean disponivel;
 }

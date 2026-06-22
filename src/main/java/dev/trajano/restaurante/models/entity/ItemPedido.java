@@ -1,5 +1,6 @@
 package dev.trajano.restaurante.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,8 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "pedido_id")
+    @JsonIgnore
     private Pedido pedido;
     @ManyToOne(optional = false)
     private Produto produto;

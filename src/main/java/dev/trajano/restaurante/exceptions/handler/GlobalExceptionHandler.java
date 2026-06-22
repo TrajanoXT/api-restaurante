@@ -1,9 +1,6 @@
 package dev.trajano.restaurante.exceptions.handler;
 
-import dev.trajano.restaurante.exceptions.CpfAlreadyExistsException;
-import dev.trajano.restaurante.exceptions.DataConflictException;
-import dev.trajano.restaurante.exceptions.ErrorResponse;
-import dev.trajano.restaurante.exceptions.NotFoundException;
+import dev.trajano.restaurante.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +22,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> exception(Exception ex){
         return build(HttpStatus.INTERNAL_SERVER_ERROR,ex.getMessage());
     }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException ex){
+        return build(HttpStatus.BAD_REQUEST,ex.getMessage());
+    }
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> businessException(BusinessException ex){
+        return build(HttpStatus.BAD_REQUEST,ex.getMessage());
+    }
+
     @ExceptionHandler(DataConflictException.class)
     public ResponseEntity<ErrorResponse> dataConflictException(DataConflictException ex){
         return build(HttpStatus.CONFLICT,ex.getMessage());
