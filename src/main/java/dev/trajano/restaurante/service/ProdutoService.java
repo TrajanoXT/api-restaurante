@@ -5,11 +5,10 @@ import dev.trajano.restaurante.dto.ProdutoResponse;
 import dev.trajano.restaurante.exceptions.MethodArgumentNotValidException;
 import dev.trajano.restaurante.exceptions.NotFoundException;
 import dev.trajano.restaurante.mapper.ProdutoMapper;
-import dev.trajano.restaurante.models.entity.Produto;
+import dev.trajano.restaurante.domain.entity.Produto;
 import dev.trajano.restaurante.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import java.util.List;
 public class ProdutoService {
     private final ProdutoMapper produtoMapper;
     private final ProdutoRepository produtoRepository;
-
     public ProdutoResponse criarProduto(ProdutoRequest produtoRequest) {
         if (produtoRequest.nome()==null||produtoRequest.nome().isBlank()) throw new MethodArgumentNotValidException("Nome nao pode ser vazio.");
         if (produtoRequest.descricao()==null||produtoRequest.descricao().isBlank())throw new MethodArgumentNotValidException("Descricao nao pode ser vazio.");
@@ -32,23 +30,18 @@ public class ProdutoService {
         List<Produto> produto = produtoRepository.findAll();
         return produto.stream().map(produtoMapper::toResponse).toList();
     }
-
     public ProdutoResponse atualizarProduto(Long id,ProdutoRequest request) {
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("Produto nao encontrado."));
+        Produto produto = produtoRepository.findById(id).orElseThrow(()->new NotFoundException("Produto nao encontrado."));
         Produto update = produtoMapper.toUpdateResponse(produto, request);
         produtoRepository.save(update);
         return produtoMapper.toResponse(produto);
     }
-
     public ProdutoResponse buscarProdutoPorId(Long id){
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("Produto nao encontrado."));
+        Produto produto = produtoRepository.findById(id).orElseThrow(()->new NotFoundException("Produto nao encontrado."));
         return produtoMapper.toResponse(produto);
     }
     public void excluirProduto(Long id){
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("Produto nao encontrado."));
+        Produto produto = produtoRepository.findById(id).orElseThrow(()->new NotFoundException("Produto nao encontrado."));
         produtoRepository.delete(produto);
     }
 }

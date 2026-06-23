@@ -1,6 +1,6 @@
 package dev.trajano.restaurante.dto;
 
-import dev.trajano.restaurante.models.enums.CategoriaProduto;
+import dev.trajano.restaurante.domain.enums.CategoriaProduto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

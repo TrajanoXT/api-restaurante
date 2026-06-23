@@ -2,10 +2,10 @@ package dev.trajano.restaurante.mapper;
 
 import dev.trajano.restaurante.dto.PedidoRequest;
 import dev.trajano.restaurante.dto.PedidoResponse;
-import dev.trajano.restaurante.models.entity.Garcom;
-import dev.trajano.restaurante.models.entity.Mesa;
-import dev.trajano.restaurante.models.entity.Pedido;
-import dev.trajano.restaurante.models.enums.StatusPedido;
+import dev.trajano.restaurante.domain.entity.Garcom;
+import dev.trajano.restaurante.domain.entity.Mesa;
+import dev.trajano.restaurante.domain.entity.Pedido;
+import dev.trajano.restaurante.domain.enums.StatusPedido;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

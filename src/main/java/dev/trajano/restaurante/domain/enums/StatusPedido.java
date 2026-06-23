@@ -1,4 +1,4 @@
-package dev.trajano.restaurante.models.enums;
+package dev.trajano.restaurante.domain.enums;
 
 public enum StatusPedido {
     ABERTO,

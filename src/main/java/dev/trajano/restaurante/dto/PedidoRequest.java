@@ -1,6 +1,6 @@
 package dev.trajano.restaurante.dto;
 
-import dev.trajano.restaurante.models.entity.ItemPedido;
+import dev.trajano.restaurante.domain.entity.ItemPedido;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 

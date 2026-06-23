@@ -1,4 +1,4 @@
-package dev.trajano.restaurante.models.entity;
+package dev.trajano.restaurante.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

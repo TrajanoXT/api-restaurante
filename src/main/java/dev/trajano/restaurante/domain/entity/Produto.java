@@ -1,6 +1,6 @@
-package dev.trajano.restaurante.models.entity;
+package dev.trajano.restaurante.domain.entity;
 
-import dev.trajano.restaurante.models.enums.CategoriaProduto;
+import dev.trajano.restaurante.domain.enums.CategoriaProduto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

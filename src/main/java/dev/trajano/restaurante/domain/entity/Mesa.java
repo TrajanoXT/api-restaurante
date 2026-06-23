@@ -1,6 +1,6 @@
-package dev.trajano.restaurante.models.entity;
+package dev.trajano.restaurante.domain.entity;
 
-import dev.trajano.restaurante.models.enums.StatusMesa;
+import dev.trajano.restaurante.domain.enums.StatusMesa;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

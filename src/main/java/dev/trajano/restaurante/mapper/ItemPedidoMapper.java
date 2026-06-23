@@ -2,7 +2,7 @@ package dev.trajano.restaurante.mapper;
 
 import dev.trajano.restaurante.dto.ItemPedidoRequest;
 import dev.trajano.restaurante.dto.ItemPedidoResponse;
-import dev.trajano.restaurante.models.entity.ItemPedido;
+import dev.trajano.restaurante.domain.entity.ItemPedido;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

@@ -1,9 +1,6 @@
 package dev.trajano.restaurante.dto;
 
-import dev.trajano.restaurante.models.entity.Garcom;
-import dev.trajano.restaurante.models.entity.ItemPedido;
-import dev.trajano.restaurante.models.entity.Mesa;
-import dev.trajano.restaurante.models.enums.StatusPedido;
+import dev.trajano.restaurante.domain.enums.StatusPedido;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

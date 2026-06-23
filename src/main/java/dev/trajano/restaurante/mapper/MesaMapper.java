@@ -2,8 +2,8 @@ package dev.trajano.restaurante.mapper;
 
 import dev.trajano.restaurante.dto.MesaRequest;
 import dev.trajano.restaurante.dto.MesaResponse;
-import dev.trajano.restaurante.models.entity.Mesa;
-import dev.trajano.restaurante.models.enums.StatusMesa;
+import dev.trajano.restaurante.domain.entity.Mesa;
+import dev.trajano.restaurante.domain.enums.StatusMesa;
 import org.springframework.stereotype.Component;
 
 @Component

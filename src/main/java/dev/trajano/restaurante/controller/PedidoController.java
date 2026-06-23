@@ -3,7 +3,7 @@ package dev.trajano.restaurante.controller;
 import dev.trajano.restaurante.dto.AdicionarItemRequest;
 import dev.trajano.restaurante.dto.PedidoRequest;
 import dev.trajano.restaurante.dto.PedidoResponse;
-import dev.trajano.restaurante.models.enums.StatusPedido;
+import dev.trajano.restaurante.domain.enums.StatusPedido;
 import dev.trajano.restaurante.service.PedidoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

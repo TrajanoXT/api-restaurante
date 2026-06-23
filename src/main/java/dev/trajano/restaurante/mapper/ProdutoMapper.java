@@ -2,7 +2,7 @@ package dev.trajano.restaurante.mapper;
 
 import dev.trajano.restaurante.dto.ProdutoRequest;
 import dev.trajano.restaurante.dto.ProdutoResponse;
-import dev.trajano.restaurante.models.entity.Produto;
+import dev.trajano.restaurante.domain.entity.Produto;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,6 +1,6 @@
 package dev.trajano.restaurante.dto;
 
-import dev.trajano.restaurante.models.enums.StatusMesa;
+import dev.trajano.restaurante.domain.enums.StatusMesa;
 
 public record MesaResponse(
         Long id,
