@@ -11,4 +11,5 @@ public record ProdutoResponse(
         BigDecimal preco,
         CategoriaProduto categoria,
         Boolean disponivel
+
 ){}

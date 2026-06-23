@@ -7,7 +7,7 @@ public class CpfValidator implements ConstraintValidator<Cpf,String> {
 
     @Override
     public boolean isValid(String cpf, ConstraintValidatorContext context){
-        if (cpf==null || cpf.isBlank())return true;
+        if (cpf==null || cpf.isBlank())return false;
         String cleanCpf = cpf.replaceAll("\\D","");
         if (cleanCpf.length()!=11||cleanCpf.matches("(\\d)\\1{10}"))return false;
         try {

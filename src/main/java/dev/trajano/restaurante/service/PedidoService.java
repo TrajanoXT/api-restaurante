@@ -84,7 +84,7 @@ public class PedidoService {
     public PedidoResponse removerItem(Long pedidoId, Long itemId){
         Pedido pedido = pedidoRepository.findById(pedidoId).orElseThrow(() -> new NotFoundException("Pedido nao encontrado!"));
         if (pedido.getStatus() != StatusPedido.ABERTO) throw new BusinessException("Status nao pode ser alterado!");
-        if (pedido.getItens().size()==1) throw new MethodArgumentNotValidException("Produto nao encontrado!");
+        if (pedido.getItens().size()==1) throw new BusinessException("Pedido deve ter ao menos 1 item");
         pedido.getItens().removeIf(i->i.getId().equals(itemId));
         recalcularValorTotal(pedido);
         pedidoRepository.save(pedido);

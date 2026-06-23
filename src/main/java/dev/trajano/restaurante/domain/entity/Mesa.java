@@ -1,10 +1,7 @@
 package dev.trajano.restaurante.domain.entity;
 
 import dev.trajano.restaurante.domain.enums.StatusMesa;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +18,6 @@ public class Mesa {
     private Long id;
     private Long numero;
     private Integer quantidade;
+    @Enumerated(EnumType.STRING)
     private StatusMesa status;
 }
