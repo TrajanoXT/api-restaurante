@@ -1,19 +1,23 @@
 # 🍽️ API Restaurante
 
-API REST para gerenciamento completo de restaurante — controle de mesas, garçons, cardápio e pedidos com regras de negócio reais.
+API REST para gerenciamento completo de restaurante — controle de mesas, garçons, cardápio e pedidos com regras de negócio reais, autenticação JWT e infraestrutura containerizada com Docker.
 
 ## 🚀 Tecnologias
 
 - **Java 21**
 - **Spring Boot 4.1**
+- **Spring Security + JWT** — autenticação e autorização por roles
 - **Spring Data JPA**
 - **PostgreSQL**
 - **Flyway** — versionamento do banco de dados
+- **Docker + Docker Compose** — containerização da aplicação e banco
+- **SpringDoc OpenAPI** — documentação automática dos endpoints
 - **Lombok**
 - **JUnit 5 + Mockito** — testes unitários
 
 ## 📦 Funcionalidades
 
+- Autenticação com **JWT** e controle de acesso por **roles** (ADMIN, GARCOM)
 - Cadastro e gerenciamento de **mesas** com status (LIVRE, OCUPADA, INATIVA)
 - Cadastro de **garçons** com validação de CPF customizada
 - Cadastro de **produtos** por categoria (Prato principal, Bebida, Entrada, Sobremesa)
@@ -22,6 +26,25 @@ API REST para gerenciamento completo de restaurante — controle de mesas, garç
 - Transição de **status do pedido** com regras de negócio (ABERTO → EM_PREPARO → PRONTO → ENTREGUE)
 - Cancelamento de pedido com liberação automática da mesa
 - Recálculo automático do total do pedido
+
+## 🔐 Autenticação
+
+A API usa JWT. Para acessar os endpoints protegidos:
+
+1. Registre um usuário em `POST /auth/register`
+2. Faça login em `POST /auth/login` e copie o token retornado
+3. Envie o token no header de todas as requisições:
+```
+Authorization: Bearer seu_token_aqui
+```
+
+### Permissões por role
+
+| Ação | ADMIN | GARCOM |
+|------|-------|--------|
+| Gerenciar mesas, garçons e produtos | ✅ | ❌ |
+| Abrir e operar pedidos | ✅ | ✅ |
+| Consultar (GETs) | ✅ | ✅ |
 
 ## 🗂️ Estrutura do Projeto
 
@@ -37,22 +60,38 @@ src/
 │   │   ├── exceptions/
 │   │   ├── mapper/
 │   │   ├── repository/
+│   │   ├── security/
 │   │   ├── service/
 │   │   └── validation/
 │   └── resources/
 │       └── db/migration/
+│           ├── V1__criar_tabelas.sql
+│           └── V2__criar_tabela_usuarios.sql
 └── test/
 ```
 
 ## ⚙️ Como rodar
 
-### Pré-requisitos
+### 🐳 Com Docker (recomendado)
 
-- Java 21+
-- PostgreSQL rodando localmente
-- Maven
+Pré-requisitos: **Docker Desktop** instalado e rodando.
 
-### Configuração
+```bash
+git clone https://github.com/TrajanoXT/api-restaurante.git
+cd api-restaurante
+docker compose up --build
+```
+
+A API estará disponível em `http://localhost:8080`. O banco PostgreSQL sobe automaticamente junto.
+
+Para parar:
+```bash
+docker compose down
+```
+
+### 💻 Localmente
+
+Pré-requisitos: Java 21+, PostgreSQL, Maven.
 
 1. Clone o repositório
 ```bash
@@ -60,23 +99,29 @@ git clone https://github.com/TrajanoXT/api-restaurante.git
 cd api-restaurante
 ```
 
-2. Configure o banco no `application.properties`
+2. Configure as variáveis de ambiente ou edite o `application.properties`:
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/restaurante
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+DB_URL=jdbc:postgresql://localhost:5432/restaurante
+DB_USER=seu_usuario
+DB_PASS=sua_senha
+jwt.secret=sua-chave-secreta-com-minimo-32-caracteres
+jwt.expiration=86400000
 ```
 
-3. Rode o projeto — o Flyway cria as tabelas automaticamente
+3. Rode o projeto — o Flyway cria as tabelas automaticamente:
 ```bash
 ./mvnw spring-boot:run
 ```
 
-A API estará disponível em `http://localhost:8080`
-
 ## 📋 Endpoints
 
-### Garçons
+### Autenticação (público)
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST | `/auth/register` | Registrar usuário |
+| POST | `/auth/login` | Login e geração do token |
+
+### Garçons (ADMIN)
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST | `/garcons` | Cadastrar garçom |
@@ -85,7 +130,7 @@ A API estará disponível em `http://localhost:8080`
 | PUT | `/garcons/{id}` | Atualizar garçom |
 | DELETE | `/garcons/{id}` | Deletar garçom |
 
-### Mesas
+### Mesas (ADMIN)
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST | `/mesas` | Cadastrar mesa |
@@ -94,7 +139,7 @@ A API estará disponível em `http://localhost:8080`
 | PUT | `/mesas/{id}` | Atualizar mesa |
 | DELETE | `/mesas/{id}` | Deletar mesa |
 
-### Produtos
+### Produtos (ADMIN)
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST | `/produto` | Cadastrar produto |
@@ -103,7 +148,7 @@ A API estará disponível em `http://localhost:8080`
 | PUT | `/produto/{id}` | Atualizar produto |
 | DELETE | `/produto/{id}` | Deletar produto |
 
-### Pedidos
+### Pedidos (ADMIN e GARCOM)
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST | `/pedidos` | Abrir pedido |
@@ -125,9 +170,29 @@ CANCELADO   CANCELADO
 
 ## 📝 Exemplo de uso
 
+**Registrar e fazer login:**
+```json
+POST /auth/register
+{
+  "nome": "Carlos Admin",
+  "email": "admin@restaurante.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+```
+```json
+POST /auth/login
+{
+  "email": "admin@restaurante.com",
+  "password": "123456"
+}
+```
+
 **Criar um pedido:**
 ```json
 POST /pedidos
+Authorization: Bearer seu_token
+
 {
   "mesaId": 1,
   "garcomId": 1
@@ -137,6 +202,8 @@ POST /pedidos
 **Adicionar item ao pedido:**
 ```json
 POST /pedidos/1/itens
+Authorization: Bearer seu_token
+
 {
   "produtoId": 1,
   "quantidade": 2,
@@ -147,6 +214,14 @@ POST /pedidos/1/itens
 **Avançar status:**
 ```
 PATCH /pedidos/1/status?status=EM_PREPARO
+Authorization: Bearer seu_token
+```
+
+## 📖 Documentação
+
+Com o projeto rodando, acesse a documentação interativa dos endpoints:
+```
+http://localhost:8080/swagger-ui/index.html
 ```
 
 ## 🧪 Testes
@@ -159,7 +234,6 @@ Cobertura atual: `CpfValidator` e `PedidoService` com testes unitários via JUni
 
 ## 📌 Próximos passos
 
-- [ ] Autenticação com Spring Security + JWT
-- [ ] Roles por perfil (ADMIN, GARCOM)
 - [ ] Paginação nos endpoints de listagem
-- [ ] Documentação com Swagger/OpenAPI
+- [ ] Testes de integração
+- [ ] Relatório de faturamento por mesa e garçom
